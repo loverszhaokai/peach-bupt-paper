@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<!--
+
+	This is a very simple Hello World example.
+	
+	Syntax:
+	
+	  peach samples\HelloWorld.xml
+	  
+	Output:
+	
+	  This example will display all each test case to the console, you should see lots of test data
+	  scroll along.  This example should only take a couple minutes to complete.
+	
+	Authors:
+	  Michael Eddington (mike@dejavusecurity.com)
+	
+	-->
+
+	<DataModel name="TheDataModel">
+		<Number name="num_0" size="8" valueType="hex" value="0"/>
+		<Number name="num_1" size="8" valueType="hex" value="1"/>
+		<Number name="num_2" size="8" valueType="hex" value="2"/>
+		<Number name="num_3" size="8" valueType="hex" value="3"/>
+		<Number name="num_4" size="8" valueType="hex" value="4"/>
+		<Number name="num_5" size="8" valueType="hex" value="5"/>
+		<Number name="num_6" size="8" valueType="hex" value="6"/>
+		<Number name="num_7" size="8" valueType="hex" value="7"/>
+		<Number name="num_8" size="8" valueType="hex" value="8"/>
+		<Number name="num_9" size="8" valueType="hex" value="9"/>
+	</DataModel>
+	
+	<StateModel name="State" initialState="State1" >
+		<State name="State1"  >
+			<Action type="output" >
+				<DataModel ref="TheDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+
+	<Test name="Default">
+		<StateModel ref="State"/>
+
+		<Strategy class="SequentialCombination">
+			<Param name="MinGroup" value="3"/>
+			<Param name="MaxGroup" value="4"/>
+			
+			<Groups>
+				<Group>
+					<field name="num_0"/>
+					<field name="num_1"/>
+					<field name="num_2"/>
+					<field name="num_3"/>
+					<field name="num_4"/>
+				</Group>
+				<Group>
+					<field name="num_7"/>
+					<field name="num_8"/>
+					<field name="num_9"/>
+				</Group>
+			</Groups>
+			
+		</Strategy>
+				
+		<Publisher class="Console" />
+		
+	</Test>
+
+</Peach>
+<!-- end -->

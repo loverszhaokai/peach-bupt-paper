@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+ 
+<Peach version="1.0" author="Dejan Lukan">
+ 
+	<Include ns="default" src="file:defaults.xml"/>
+ 
+	<DataModel name="DataKSTET">
+ 
+		<String value="KSTET " mutable="false" token="true"/>
+	
+		<String value=""/>
+ 
+		<String value="rn" mutable="false" token="true"/>
+ 
+	</DataModel>
+ 
+	<StateModel name="StateKSTET" initialState="Initial">
+ 
+		<State name="Initial">
+ 
+			<Action type="input" ><DataModel ref="DataResponse"/></Action>
+ 
+			<Action type="output"><DataModel ref="DataKSTET"/></Action>
+ 
+			<Action type="input" ><DataModel ref="DataResponse"/></Action>
+ 
+		</State>
+ 
+	</StateModel>
+ 
+	<Agent name="Agent" location="http://127.0.0.1:9000">
+ 
+		<Monitor name="VulnseverMonitorDebugger" class="debugger.WindowsDebugEngine">
+ 
+			<Param name="CommandLine" value="C:Documents and SettingsuserDesktopvulnservervulnserver.exe"/>
+ 
+		</Monitor>
+ 
+	</Agent>
+ 
+	<Test name="TestKSTET">
+
+		<Agent ref="Agent"/>
+ 
+		<StateModel ref="StateKSTET"/>
+ 
+		<Publisher class="tcp.Tcp">
+ 
+			<Param name="host" value="127.0.0.1"/>
+ 
+			<Param name="port" value="9999"/>
+ 
+		</Publisher>
+ 
+	</Test>	
+ 
+	<Run name="DefaultRun">
+ 
+		<Test ref="TestKSTET"/>
+ 
+		<Logger class="logger.Filesystem">
+ 
+			<Param name="path" value="/<a title="home" href="http://resources.infosecinstitute.com/">home</a>/user/peach/vulnserver/"/>
+		</Logger>
+ 
+	</Run>
+ 
+</Peach>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<!--
+
+	This is a very simple Hello World example.
+	
+	Syntax:
+	
+	  peach samples\HelloWorld.xml
+	  
+	Output:
+	
+	  This example will display all each test case to the console, you should see lots of test data
+	  scroll along.  This example should only take a couple minutes to complete.
+	
+	Authors:
+	  Michael Eddington (mike@dejavusecurity.com)
+	
+	-->
+
+	<!-- Create a simple data template containing a single string -->
+	<DataModel name="TheDataModel">
+		<String value="Hello World!" />
+	</DataModel>
+	
+	<!-- 
+		Our state model will perform actions using our data models.  Actions are things
+		like sending or receiving data.  How the data is sent or received will depend on
+		the publisher we specify later on.  For example you might configure to use
+		a FileWriter publisher that would write a file.   For this example we will be 
+		displaying the output to the console via standard out (Stdout).
+	-->
+	<StateModel name="State" initialState="State1" >
+		<State name="State1"  >
+			<Action type="output" >
+				<DataModel ref="TheDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+
+	<Test name="Default">
+	
+		<StateModel ref="State"/>
+		
+		<Strategy class="SequentialCombination">
+		
+			<Param name="MinGroup" value="3"/>
+			<Param name="MaxGroup" value="6"/>
+			
+			<CombinationMaxMutation combination="3" maxMutations="1000"/>
+			<CombinationMaxMutation combination="4" maxMutations="10000"/>
+			<CombinationMaxMutation combination="5" maxMutations="100000"/>
+			<CombinationMaxMutation combination="6" maxMutations="1000000"/>
+			
+		</Strategy>
+		
+		<Mutators mode="include">
+			<Mutator class="StringMutator"/>
+		</Mutators>
+
+		<Publisher class="Console" />
+
+	</Test>
+
+</Peach>
+<!-- end -->

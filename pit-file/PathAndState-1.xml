@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://phed.org/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://phed.org/2012/Peach ../peach.xsd">
+
+	<DataModel name="TheDataModel_1">
+		<String value="DataModel_1\n" />
+	</DataModel>
+	
+	<DataModel name="TheDataModel_2">
+		<String value="DataModel_2\n" />
+	</DataModel>
+	
+	<DataModel name="TheDataModel_3">
+		<String value="DataModel_3\n" />
+	</DataModel>
+	
+	<StateModel name="StateModel1" initialState="State1" >
+		<State name="State1">
+			<Action type="output">
+				<DataModel ref="TheDataModel_1"/>
+			</Action>
+			<!--
+			<Action type="changeState" ref="State2"/>
+			-->
+		</State>
+		<State name="State2">
+			<Action type="output">
+				<DataModel ref="TheDataModel_2"/>
+			</Action>
+		</State>
+		<State name="State3">
+			<Action type="output">
+				<DataModel ref="TheDataModel_3"/>
+			</Action>
+		</State>
+	</StateModel>
+	
+	<StateModel name="StateModel2" initialState="State4" >
+		<State name="State4">
+			<Action type="output">
+				<DataModel ref="TheDataModel_1"/>
+			</Action>
+			<!--
+			<Action type="changeState" ref="State2"/>
+			-->
+		</State>
+	</StateModel>
+
+	<Test name="Default">
+		<Strategy class="Sequential"/>
+		<StateModel ref="StateModel1"/>
+		<StateModel ref="StateModel2"/>
+
+		<Path ref="xx" /> 
+		<Path ref="xx" /> 
+
+		<Publisher class="Console"/>
+		
+		<Mutators mode="include">
+			<Mutator  class="DataElementRemoveMutator"/>
+		</Mutators>
+	</Test>
+
+</Peach>
+<!-- end -->

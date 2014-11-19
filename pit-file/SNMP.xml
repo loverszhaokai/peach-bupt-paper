@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	
+
+<DataModel name="UdpRequest">
+	
+		<Blob name="SNMPTag" value="30" valueType="hex" />
+		<Number size="8" signed="false" name="MessageLength" valueType="hex" endian="big">
+				<Relation type="size" of="Message" />
+		</Number>
+		<Block name="Message" minOccurs="1">
+		<Blob name="VersionTag" value="02" valueType="hex" />
+		<Number size="8" signed="false" name="VersionLength" valueType="hex" endian="big">
+				<Relation type="size" of="Version" />
+		</Number>
+		<Block name="Version" minOccurs="1">
+		<Blob name="VersionValue" value="00" valueType="hex" />
+		</Block>
+		<Blob name="CommunityTag" value="04" valueType="hex" />
+		<Number size="8" signed="false" name="CommunityLength" valueType="hex" endian="big">
+				<Relation type="size" of="Community" />
+		</Number>
+		<Block name="Community" minOccurs="1">
+		<Blob name="CommunityValue" value="70 75 62 6c 69 63" valueType="hex" />
+		</Block>
+		<Blob name="PduTypeTag" value="a0" valueType="hex" />
+		<Number size="8" signed="false" name="PduTypeLength" valueType="hex" endian="big">
+				<Relation type="size" of="PduType" />
+		</Number>
+		<Block name="PduType" minOccurs="1">
+		<Blob name="RequestIdTag" value="02" valueType="hex" />
+		<Number size="8" signed="false" name="RequestIdLength" valueType="hex" endian="big">
+				<Relation type="size" of="RequestId" />
+		</Number>
+		<Block name="RequestId" minOccurs="1">
+		<Blob name="RequestIdValue" value="2d" valueType="hex" />	
+		</Block>
+		<Blob name="ErrorStatusTag" value="02" valueType="hex" />
+		<Number size="8" signed="false" name="ErrorStatusLength" valueType="hex" endian="big">
+				<Relation type="size" of="ErrorStatus" />
+		</Number>
+		<Block name="ErrorStatus" minOccurs="1">
+		<Blob name="ErrorStatusValue" value="00" valueType="hex" />
+		</Block>
+		<Blob name="ErrorIndexTag" value="02" valueType="hex" />
+		<Number size="8" signed="false" name="ErrorIndexLength" valueType="hex" endian="big">
+				<Relation type="size" of="ErrorIndex" />
+		</Number>
+		<Block name="ErrorIndex" minOccurs="1">
+		<Blob name="ErrorIndexValue" value="00" valueType="hex" />
+		</Block>
+		<Blob name="VariableBindingsTag0" value="30" valueType="hex" />
+	  <Number size="8" signed="false" name="VariableBindingsLength0" valueType="hex" endian="big">
+				<Relation type="size" of="VariableBindings0" />
+		</Number>
+		<Block name="VariableBindings0" minOccurs="1">
+	  <Blob name="VariableBindingsTag" value="30" valueType="hex" />
+	  <Number size="8" signed="false" name="VariableBindingsLength" valueType="hex" endian="big">
+				<Relation type="size" of="VariableBindings" />
+		</Number>
+		<Block name="VariableBindings" minOccurs="1">
+	  <Blob name="ObjectNameTag" value="06" valueType="hex" />
+	  <Number size="8" signed="false" name="ObjectNameLength" valueType="hex" endian="big">
+				<Relation type="size" of="ObjectName" />
+		</Number>
+		<Block name="ObjectName" minOccurs="1">
+	  <Blob name="ObjectNameValue" value="2b 06 01 02 01 01 05 00" valueType="hex" />
+	  </Block>
+	  <Blob name="ObjectValueTag" value="05" valueType="hex" />
+	  <Number size="8" signed="false" name="ObjectValueLength" valueType="hex" endian="big">
+				<Relation type="size" of="ObjectValue" />
+		</Number>
+		<Block name="ObjectValue" minOccurs="1">
+	  </Block>
+	  </Block>
+	  </Block>
+	  </Block>
+		</Block>
+	
+	</DataModel>
+	
+	<DataModel name="Recevived">
+			<Blob />
+	</DataModel>
+	
+	<StateModel name="TheStateModel" initialState="TheState">
+		<State name="TheState">
+			<Action type="output">
+				<DataModel ref="UdpRequest" />
+			</Action>
+		<Action type="input">
+				<DataModel ref="Recevived"/>
+			</Action>
+		</State>
+	</StateModel>
+
+	<Agent name="Local">
+				<!--<Monitor class="Ping">
+					<Param name="Host" value="192.168.4.124" />
+			</Monitor>
+		<Monitor class="Socket">
+					<Param name="Host" value="192.168.4.124" />
+					<Param name="Port" value="102"/>
+			</Monitor>
+		<Monitor class="SNMPMonitor">
+			<Param name="Host" value="192.168.4.12" />
+		  	<Param name="Device" value="本地连接" />
+		  	<Param name="Filter" value="port 102" />
+        </Monitor> -->
+	</Agent>
+	
+	
+  
+	<Test name="Default">
+		<Agent ref="Local" />
+		<StateModel ref="TheStateModel"/>
+
+		<Publisher class="Udp">
+			<Param name="Host" value="192.168.4.12" />
+			<Param name="Port" value="161" />
+		</Publisher>
+		
+		
+		<Strategy class="Sequential"/>
+		
+	
+	
+		<Logger class="Filesystem">
+			<Param name="Path" value="Logs" />
+		</Logger>
+	</Test>
+
+</Peach>
+<!-- end -->

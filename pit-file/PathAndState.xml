@@ -1,0 +1,18 @@
+<StateModel name="State" initialState="State1">
+<State name="State1" >
+<Action type="changeState" ref="State2" when="Python_Bool_Expression == 1" />
+<Choice>
+<Action type="changeState" ref=" State2" />
+<Action type="changeState" ref=" State3" />
+</Choice>
+</State>
+<State name="State2" />
+<State name="State3" />
+</StateModel>
+<Test name="StrategyTest" > 
+<StateModel ref="State" > 
+<Path ref="State1" /> 
+<Path ref="State3" /> 
+</StateModel> 
+<Publisher class="stdout.Stdout" />    
+</Test>

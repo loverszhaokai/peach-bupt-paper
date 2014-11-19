@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<DataModel name="TheDataModel">
+		<Blob name= "version_and_length" value="45" valueType="hex"/>
+		<Blob name="ip.dsfield" value="00" valueType="hex"/>
+		<Blob name="ip.len" value="003c" valueType="hex"/>
+		<Blob name="ip.id" value="02e8" valueType="hex"/>
+		<Blob name="ip.flags" value="00" valueType="hex"/>
+		<Blob name="ip.frag_offset" value="00" valueType="hex"/>
+		<Blob name="ip.ttl" value="80" valueType="hex"/>
+		<Blob name="ip.proto" value="01" valueType="hex"/>
+		<Blob name="ip.checksum" value="0000" valueType="hex"/>
+		
+		<Number name="ICMPChecksum" signed="false" endian="big" size="16">
+			<Fixup class="IcmpChecksumFixup">
+				<Param name="ref" value="Data"/>
+			</Fixup>
+		</Number>
+		
+		
+		<Blob name="ip.src" value="c0a8049a" valueType="hex"/>
+		<Blob name="ip.dst" value="c0a804f4" valueType="hex"/>
+		<Blob name="icmp" value="08004cd6000100856162636465666768696a6b6c6d6e6f7071727374757677616263646566676869" valueType="hex"/>
+	</DataModel>
+
+	<StateModel name="TheState" initialState="initial">
+        <State name="initial">
+			<Action type="output">
+				<DataModel ref="TheDataModel"/>
+            </Action>
+        </State>
+	</StateModel>
+
+	<Test name="Default">
+		<Strategy class="Sequential"/>
+		<StateModel ref="TheState"/>
+        <Publisher class="RawIPv4">
+			<!--1 is for icmp-->
+			<Param name="Protocol" value="1" />
+            <Param name="Host" value="192.168.4.244" />
+        </Publisher>
+	</Test>
+
+</Peach>
+
+
+
+
+
+
+

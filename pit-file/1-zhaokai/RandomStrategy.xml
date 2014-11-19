@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach>
+	<DataModel name="TheDataModel">
+		<String value="11111"/>
+		<!--
+		<String value="22222"/>
+		<String value="33333"/>
+		<String value="44444"/>
+		-->
+	</DataModel>
+	
+	<StateModel name="TheState" initialState="Initial">
+		<State name="Initial">
+			<Action type="output">
+				<DataModel ref="TheDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+	
+	<Test name="Default">
+		<Strategy class="Sequential"/>
+		<StateModel ref="TheState"/>
+		<Publisher class="File">
+			<Param name="FileName" value="D:\source\peach\doc\PitFile\zhaokai\RandomStrategy_log.txt"/>
+		</Publisher>
+		
+		<Mutators mode="exclude">
+			<Mutator  class="ArrayReverseOrderMutator"/>
+			<Mutator  class="ArrayVarianceMutator"/>
+			<Mutator  class="BlobBitFlipperMutator"/>
+			<Mutator  class="BlobDWORDSliderMutator"/>
+			<Mutator  class="BlobMutator"/>
+			<Mutator  class="DataElementDuplicateMutator"/>
+			<!--<Mutator  class="DataElementRemoveMutator"/>-->
+			<Mutator  class="DataElementSwapNearNodesMutator"/>
+			<Mutator  class="FiniteRandomNumbersMutator"/>
+			<Mutator  class="NumericalEdgeCaseMutator"/>
+			<Mutator  class="NumericalVarianceMutator"/>
+			<Mutator  class="SizedDataNumericalEdgeCasesMutator"/>
+			<Mutator  class="SizedDataVaranceMutator"/>
+			<Mutator  class="SizedNumericalEdgeCasesMutator"/>
+			<Mutator  class="SizedVaranceMutator"/>
+			<Mutator  class="StringCaseMutator"/>
+			<Mutator  class="StringMutator"/>
+			<Mutator  class="UnicodeBadUtf8Mutator"/>
+			<Mutator  class="UnicodeBomMutator"/>
+			<Mutator  class="UnicodeStringsMutator"/>
+			<Mutator  class="UnicodeUtf8ThreeCharMutator"/>
+			<Mutator  class="ValidValuesMutator"/>
+			<Mutator  class="WordListMutator"/>
+			<Mutator  class="XmlW3CMutator"/>
+		</Mutators>
+	</Test>
+</Peach>
+

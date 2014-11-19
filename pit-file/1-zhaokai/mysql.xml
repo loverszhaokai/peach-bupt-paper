@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<DataModel name="PacketHeader">
+        <Number name="Length" size="24" signed="false" endian="big">
+            <Relation type="size" of="Data"/>
+        </Number>
+        <Number name="Number" size="8" signed="false" endian="big" />
+        <Blob name="Data" />
+	</DataModel>
+	
+	<!-- Server -> Client -->
+	<DataModel name="HandshakePacket" ref="PacketHeader">
+        <Block name="Data">
+            <Number name="ProtocolVersion" size="8" signed="false" endian="big"/>
+            <String name="ServerVersion" nullTerminated="true" />
+            <Number name="ThreadId" size="32" signed="false" endian="big" />
+            <Blob name="ScrambleBuff" length="8" />
+            <Blob length="1" value="0" isStatic="true" />
+            <Number name="Capabilities" size="16" signed="false" endian="big" />
+            <Number name="Language" size="8" signed="false" endian="big" />
+            <Number name="Status" size="16" signed="false" endian="big" />
+            <Blob length="13" />
+            <Blob name="ScrambleBuff2" length="13" />
+        </Block>
+	</DataModel>
+	
+	<!-- Client -> Server -->
+	<DataModel name="ClientAuthPacket" ref="PacketHeader">
+        <Block name="Data">
+            <Number name="ClientFlags" size="32" signed="false" endian="big" />
+            <Number name="MaxPacketSize" size="32" signed="false" endian="big" />
+            <Number name="CharSet" size="8" signed="false" endian="big" />
+            <Blob length="23" value="0" />
+            <String name="User" nullTerminated="true" />
+            <Number name="PasswordLength" size="8" signed="false" endian="big" >
+                <Relation type="size" of="Password"/>
+            </Number>
+            <Blob name="Password" />
+            <String name="Database" nullTerminated="true" />
+        </Block>
+	</DataModel>
+	
+	<!-- Client -> Server -->
+	<DataModel name="CommandPacket" ref="PacketHeader">
+        <Block name="Data">
+            <Number name="Command" size="8" signed="false" endian="big" />
+            <String name="SQL" nullTerminated="true" />
+        </Block>
+	</DataModel>
+	
+	<StateModel name="TheStateModel" initialState="TheState">
+		<State name="TheState">
+			<Action type="output">
+				<DataModel ref="HttpRequest" />
+			</Action>
+		</State>
+	</StateModel>
+
+	<!-- Agents that run localy will be started automatically by Peach -->
+	<Agent name="RemoteAgent" location="tcp://10.0.0.155:9001">
+		<Monitor name="Debugger" class="WindowsDebugger">
+			<Param name="CommandLine" value="CrashableServer.exe 10.0.0.155 4242"/>
+		</Monitor>
+
+		<Monitor name="Network" class="PcapMonitor">
+			<Param name="filter" value="tcp"/>
+		</Monitor>
+	</Agent>
+
+	<Test name="Default">
+		<!--<Agent ref="RemoteAgent" />-->
+		<StateModel ref="TheStateModel"/>
+
+		<Publisher class="Udp">
+			<Param name="Host" value="192.168.4.155" />
+			<Param name="Port" value="4242" />
+		</Publisher>
+		
+		<Logger class="Filesystem">
+			<Param name="Path" value="Logs" />
+		</Logger>
+	</Test>
+
+</Peach>
+<!-- end -->

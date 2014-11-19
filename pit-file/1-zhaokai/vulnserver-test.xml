@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<DataModel name="RecvDataModel">
+		<String value="" />
+	</DataModel>
+	
+	<DataModel name="SendDataModel">
+		<String value="KSTET " mutable="false"/>
+		<String value="AAAAAA" />
+		<String value="\n" mutable="false"/>
+		<String value="BBBBBB" />
+		<String value="\n" mutable="false"/>
+		<String value="CCCCCC" />
+	</DataModel>
+	
+	<StateModel name="State" initialState="State1" >
+		<State name="State1"  >
+			<Action name="OutputAction" type="output" >
+				<DataModel ref="SendDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+
+	<Test name="Default">
+
+		<StateModel ref="State"/>
+		
+		<Strategy class="SequentialCombination">
+			<Param name="MaxGroup" value="2"/>
+			<Param name="MinGroup" value="1"/>
+		</Strategy>
+		
+		
+		<Mutators mode="include">
+			<Mutator class="DataElementRemoveMutator"/>
+			<Mutator class="StringCaseMutator"/>
+			<Mutator class="UnicodeBadUtf8Mutator"/>
+		</Mutators>
+	
+		<Publisher class="Console"/>
+		
+		<Logger class="Filesystem">
+			<Param name="Path" value="VulnServerLogs" />
+		</Logger>
+
+	</Test>
+
+</Peach>

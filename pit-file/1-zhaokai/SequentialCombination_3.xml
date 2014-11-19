@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<!--
+
+	This is a very simple Hello World example.
+	
+	Syntax:
+	
+	  peach samples\HelloWorld.xml
+	  
+	Output:
+	
+	  This example will display all each test case to the console, you should see lots of test data
+	  scroll along.  This example should only take a couple minutes to complete.
+	
+	Authors:
+	  Michael Eddington (mike@dejavusecurity.com)
+	
+	-->
+
+	<!-- Create a simple data template containing a single string -->
+	<DataModel name="TheDataModel">
+		<String value="111111111111\n"/>
+		<String value="222222222222\n" group="g2"/>
+		<String value="333333333333\n" group="g3"/>
+		<String value="444444444444\n" group="g1"/>
+		<String value="555555555555\n" group="g1"/>
+		<String value="666666666666\n" group="g1"/>
+		<String value="777777777777\n" group="g1"/>
+	</DataModel>
+	
+	<!-- 
+		Our state model will perform actions using our data models.  Actions are things
+		like sending or receiving data.  How the data is sent or received will depend on
+		the publisher we specify later on.  For example you might configure to use
+		a FileWriter publisher that would write a file.   For this example we will be 
+		displaying the output to the console via standard out (Stdout).
+	-->
+	<StateModel name="State" initialState="State1" >
+		<State name="State1"  >
+			<Action type="output" >
+				<DataModel ref="TheDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+
+	<!-- Our Test element will link together our state model and publisher -->
+	<Test name="Default">
+		<StateModel ref="State"/>
+		
+		<Mutators mode="include">
+			<Mutator class="DataElementDuplicateMutator"/>
+			<Mutator class="DataElementRemoveMutator"/>
+		</Mutators>
+		
+		<Strategy class="SequentialCombination">
+			<Param name="field_max" value="3"/>
+			
+		</Strategy>
+		
+		<!--
+		<Strategy class="RandomDeterministic"/>
+		<Strategy class="Random"/>
+		<Strategy class="Sequential"/>
+		<Param name="max_mutants" value="1,2,3,4"/>
+		-->		
+		
+		<!--
+			The publisher we select will determin what the actions
+			in our state model actually do.  For this example we are
+			using the "Stdout" publisher.  This publisher will send any
+			"output" actions to the console.
+		-->
+				
+		<Publisher class="Console" />
+		
+		<!--
+		
+		<Publisher class="File">
+			<Param name="FileName" value="fuzzed.bin" />
+		</Publisher>
+		<Publisher class="Udp">
+			<Param name="Host" value="192.168.1.190" />
+			<Param name="Port" value="4242" />
+		</Publisher>
+		-->
+
+	</Test>
+
+</Peach>
+<!-- end -->

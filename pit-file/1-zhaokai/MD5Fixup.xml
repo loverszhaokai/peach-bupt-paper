@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach>
+	<DataModel name="TheDataModel">
+		<Blob name="Checksum">
+			<Fixup class="MD5Fixup">
+				<Param name="ref" value="Data"/>
+			</Fixup>
+		</Blob>
+		<Blob name="Data" value="12345"/>
+	</DataModel>
+	
+	<StateModel name="TheState" initialState="Initial">
+		<State name="Initial">
+			<Action type="output">
+				<DataModel ref="TheDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+	
+	<Test name="Default">
+		<StateModel ref="TheState"/>
+		<Publisher class="Console"/>
+	</Test>
+</Peach>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<DataModel name="output">
+		<String value="zhaokai1" />
+		<String value="zhaokai2" />
+	</DataModel>
+	
+	<DataModel name="TheDataModel">
+		<String name="value2" length="4" />
+	</DataModel>
+
+	<StateModel name="TheState" initialState="initial">
+        <State name="initial">
+            <Action type="output">
+				<DataModel ref="output"/>
+            </Action>
+
+            <!-- receive 4 bytes -->
+            <Action type="input">
+                <DataModel ref="TheDataModel"/>
+            </Action>
+			
+			<Action type="output">
+				<DataModel ref="TheDataModel"/>
+            </Action>
+        </State>
+	</StateModel>
+
+	<Test name="Default">
+		<Strategy class="Sequential"/>
+		<StateModel ref="TheState"/>
+        <Publisher class="TcpClient">
+            <Param name="Host" value="192.168.4.244" />
+            <Param name="Port" value="4000" />
+        </Publisher>
+		<Mutators mode="exclude">
+			<Mutator class="DataElementDuplicateMutator"/>
+			<Mutator class="DataElementSwapNearNodesMutator"/>
+			<Mutator class="StringCaseMutator"/>
+			<Mutator class="StringMutator"/>
+			<Mutator class="UnicodeBadUtf8Mutator"/>
+			<Mutator class="UnicodeBomMutator"/>
+			<Mutator class="UnicodeUtf8ThreeCharMutator"/>
+		</Mutators>
+	</Test>
+
+</Peach>
+
+
+
+
+
+
+
