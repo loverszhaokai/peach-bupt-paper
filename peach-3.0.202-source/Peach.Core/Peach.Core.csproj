@@ -506,6 +506,7 @@
     <Compile Include="MutationStrategies\RandomDeterministicStrategy.cs" />
     <Compile Include="MutationStrategies\RandomStrategy.cs" />
     <Compile Include="MutationStrategies\Sequential.cs" />
+    <Compile Include="MutationStrategies\SequentialCombination.cs" />
     <Compile Include="MutationStrategy.cs" />
     <Compile Include="Mutator.cs" />
     <Compile Include="MutatorAttribute.cs" />
@@ -539,6 +540,7 @@
     <Compile Include="Mutators\UnicodeUtf8ThreeCharMutator.cs" />
     <Compile Include="Mutators\UnicodeUtf8ThreeCharMutator.Data.cs" />
     <Compile Include="Mutators\ValidValuesMutator.cs" />
+    <Compile Include="Mutators\VulnMutator.cs" />
     <Compile Include="Mutators\WordListMutator.cs" />
     <Compile Include="Mutators\XmlW3CMutator.cs" />
     <Compile Include="NetworkAdapter.cs" />

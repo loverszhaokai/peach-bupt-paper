@@ -69,10 +69,6 @@
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Peach.Core.OS.OSX\Peach.Core.OS.OSX.csproj">
-      <Project>{1F6BD7C2-289C-4628-B475-C44E43655142}</Project>
-      <Name>Peach.Core.OS.OSX</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Peach.Core\Peach.Core.csproj">
       <Project>{63C7C70D-0CBF-40EC-A11E-079B2E943D47}</Project>
       <Name>Peach.Core</Name>

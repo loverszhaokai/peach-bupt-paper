@@ -1,4 +1,10 @@
-Peach 3 - RC 1
+Peach 3 - SP1
+================
+
+Change by zhaokai
+
+1. Support SequentialCombination
+
 ================
 
 Welcome to Peach 3, a complete re-write of Peach using the 

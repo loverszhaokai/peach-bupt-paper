@@ -247,6 +247,14 @@ namespace Peach.Core.Dom
 		/// </summary>
 		public const uint MUTATE_DEFAULT = MUTATE_OVERRIDE_FIXUP;
 
+
+        // Judge whether ApplyMutation
+        private string _model_name;
+        public string ModelName
+        {
+            get { return _model_name; }
+            set { _model_name = value; }
+        }
 		private string _name;
 
 		public string name

@@ -47,6 +47,13 @@ namespace Peach.Core
 	[Serializable]
 	public abstract class MutationStrategy
 	{
+        // Max fields of combined
+        // e.g. There can't be more than 3 fields combination in case that MaxGroup = 3
+        public ushort MaxGroup { get; set; }
+
+        // Min fields of combined
+        // e.g. There can't be less than 3 fields combination in case that MinGroup = 3
+        public ushort MinGroup { get; set; }
 		static NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
 		public delegate void MutationEventHandler(string elementName, string mutatorName);
@@ -59,6 +66,7 @@ namespace Peach.Core
 
 		public MutationStrategy(Dictionary<string, Variant> args)
 		{
+            ParameterParser.Parse(this, args);
 		}
 
 		public virtual void Initialize(RunContext context, Engine engine)
