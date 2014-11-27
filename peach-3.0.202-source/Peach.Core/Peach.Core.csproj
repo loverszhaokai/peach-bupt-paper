@@ -427,6 +427,7 @@
     <Compile Include="Cracker\CrackingFailure.cs" />
     <Compile Include="Cracker\ICrackable.cs" />
     <Compile Include="Cracker\NotEnoughDataException.cs" />
+    <Compile Include="CurrentMutators.cs" />
     <Compile Include="Dom\Action.cs" />
     <Compile Include="Dom\Agent.cs" />
     <Compile Include="Dom\Data.cs" />
@@ -507,6 +508,7 @@
     <Compile Include="MutationStrategies\RandomStrategy.cs" />
     <Compile Include="MutationStrategies\Sequential.cs" />
     <Compile Include="MutationStrategies\SequentialCombination.cs" />
+    <Compile Include="Sample.cs" />
     <Compile Include="MutationStrategy.cs" />
     <Compile Include="Mutator.cs" />
     <Compile Include="MutatorAttribute.cs" />
@@ -528,15 +530,25 @@
     <Compile Include="Mutators\SizedDataVaranceMutator.cs" />
     <Compile Include="Mutators\SizedNumericalEdgeCasesMutator.cs" />
     <Compile Include="Mutators\SizedVaranceMutator.cs" />
+    <Compile Include="Mutators\StringBenefitMutator.cs" />
+    <Compile Include="Mutators\StringBenefitMutator.Data.cs" />
     <Compile Include="Mutators\StringCaseMutator.cs" />
     <Compile Include="Mutators\StringMutator.cs" />
     <Compile Include="Mutators\StringMutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeBadUtf8BenefitMutator.cs" />
     <Compile Include="Mutators\UnicodeBadUtf8Mutator.cs" />
+    <Compile Include="Mutators\UnicodeBadUtf8BenefitMutator.Data.cs" />
     <Compile Include="Mutators\UnicodeBadUtf8Mutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeBomBenefitMutator.cs" />
+    <Compile Include="Mutators\UnicodeBomBenefitMutator.Data.cs" />
     <Compile Include="Mutators\UnicodeBomMutator.cs" />
     <Compile Include="Mutators\UnicodeBomMutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeStringsBenefitMutator.cs" />
+    <Compile Include="Mutators\UnicodeStringsBenefitMutator.Data.cs" />
     <Compile Include="Mutators\UnicodeStringsMutator.cs" />
     <Compile Include="Mutators\UnicodeStringsMutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeUtf8ThreeCharBenefitMutator.cs" />
+    <Compile Include="Mutators\UnicodeUtf8ThreeCharBenefitMutator.Data.cs" />
     <Compile Include="Mutators\UnicodeUtf8ThreeCharMutator.cs" />
     <Compile Include="Mutators\UnicodeUtf8ThreeCharMutator.Data.cs" />
     <Compile Include="Mutators\ValidValuesMutator.cs" />
@@ -683,6 +695,10 @@
     <ProjectReference Include="..\3rdParty\clrzmq\src\ZeroMQ\ZeroMQ.csproj">
       <Project>{6FFD872F-A4A4-4EFA-9B4D-4342BA6CF250}</Project>
       <Name>ZeroMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySQLHelper\MySQLHelper.csproj">
+      <Project>{4cef5693-5f4f-4abc-b9e2-933ac6087d82}</Project>
+      <Name>MySQLHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

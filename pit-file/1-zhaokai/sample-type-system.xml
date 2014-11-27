@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+	<DataModel name="RecvDataModel">
+		<String value="" />
+	</DataModel>
+	
+	<DataModel name="SendDataModel">
+		<String value="KSTET " mutable="false"/>
+		<String value="AAAAAA" />
+		<String value="\n" mutable="false"/>
+		<String value="BBBBBB" />
+		<String value="\n" mutable="false"/>
+		<String value="CCCCCC" />
+	</DataModel>
+	
+	<StateModel name="State" initialState="State1" >
+		<State name="State1"  >
+			<Action name="InputAction" type="input" >
+				<DataModel ref="RecvDataModel"/>
+			</Action>
+			<Action name="OutputAction" type="output" >
+				<DataModel ref="SendDataModel"/>
+			</Action>
+		</State>
+	</StateModel>
+	
+	<Agent name="RemoteAgent" location="tcp://127.0.0.1:9001">
+		<Monitor class="WindowsDebugger">
+			<Param name="CommandLine" value="C:\vulnserver\vulnserver.exe"/>
+			<Param name="WinDbgPath" value="C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64" />
+		</Monitor>
+	</Agent>
+	
+	<Test name="Default">
+
+		<Agent ref="RemoteAgent" />
+
+		<StateModel ref="State"/>
+		
+		<Strategy class="Sequential"/>
+		
+		<Sample class="TypeSystemSample" vrc="70%"/>
+		
+		<Mutators mode="include">
+			<Mutator class="DataElementRemoveMutator"/>
+			<Mutator class="StringCaseMutator"/>
+			<Mutator class="VulnMutator"/>
+		</Mutators>
+	
+		<Publisher class="Tcp">
+			<Param name="Host" value="127.0.0.1" />
+			<Param name="Port" value="9999" />
+		</Publisher>
+		
+		<Logger class="Filesystem">
+			<Param name="Path" value="C:\PeachVulnServerLogs" />
+		</Logger>
+
+	</Test>
+
+</Peach>

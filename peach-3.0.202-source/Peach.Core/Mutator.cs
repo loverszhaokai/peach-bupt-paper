@@ -133,5 +133,196 @@ namespace Peach.Core
 		}
 
 		#endregion
+
+
+        // 
+        // Pos  Times
+        // 0    0
+        // 1    3
+        // 2    5
+        // 3    1
+        //
+        protected uint[][] allPosTimes;
+
+        // 
+        // Pos  Times
+        // 0    0
+        // 1    3
+        // 2    5
+        // 3    1
+        //
+        void InitAllPosTimes()
+        {
+            for (uint i = 0; i < allPosTimes.Length; i++)
+            {
+                allPosTimes[i] = new uint[2];
+                allPosTimes[i][0] = i;
+                allPosTimes[i][1] = 0;
+            }
+        }
+
+
+        // 
+        // Pos  Times
+        // 0    0
+        // 1    3
+        // 2    5
+        // 3    1
+        // 
+        // Change to
+        //
+        // Pos  Times
+        // 2    5
+        // 1    3
+        // 3    1
+        // 0    0
+        // 
+        void SortAllPosTimes()
+        {
+            Sort<uint>(allPosTimes, 1);
+        }
+
+        static void Sort<T>(T[][] data, int col)
+        {
+            Comparer<T> comparer = Comparer<T>.Default;
+            System.Array.Sort<T[]>(data, (x, y) => comparer.Compare(y[col], x[col]));
+        }
+
+        void SortValuesBenefit<T>(string mutatorName, T[] values, T[] values_benefit, uint top)
+        {
+            allPosTimes = new uint[values.Length][];
+            // Init allPosTimes with times = 0
+            InitAllPosTimes();
+
+            // Get postions times 
+            List<Tuple<uint, uint>> posTimes = new List<Tuple<uint, uint>>();
+            MySQLHelper.MySQLHelper.GetMutationTimes(mutatorName, ref posTimes);
+
+            // Update allPosTimes's times
+            foreach (Tuple<uint, uint> it in posTimes)
+            {
+                allPosTimes[it.Item1][1] = it.Item2;
+            }
+
+            // Sort allPosTimes
+            SortAllPosTimes();
+        }
+
+        protected void InitValuesBenefit<T>(string mutatorName, T[] values, ref T[] values_benefit)
+        {
+            if (Sample.IsUseSample)
+            {
+                // Change values_benefit
+                uint size = Convert.ToUInt32(values.Length * Sample.VRC);
+                values_benefit = new T[size];
+
+                // Sort values_benefit
+                SortValuesBenefit(mutatorName, values, values_benefit, size);
+
+                // Random the order of array from 1 + top to end
+                uint top = Convert.ToUInt32(size * Sample.VTOP);
+                RandomArray<uint>(allPosTimes, (int)top, (int)size);
+
+                // Set the top values
+                for (uint i = 0; i < size; ++i)
+                    values_benefit[i] = values[allPosTimes[i][0]];
+            }
+            else
+            {
+                values_benefit = new T[values.Length];
+
+                // Copy each values to values_benefit
+                for (int i = 0; i < values.Length; ++i)
+                    values_benefit[i] = values[i];
+            }
+        }
+
+
+        protected static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+
+        protected static void Swap<T>(ref T[] lhs, ref T[] rhs)
+        {
+            T[] temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+
+        protected static void RandomArray<T>(T[] array, int start, int end)
+        {
+            for (int i = start; 1 + i < end; ++i)
+            {
+                System.Random rand = new System.Random();
+                int randPos = rand.Next(1 + i, end);
+                Swap<T>(ref array[i], ref array[randPos]);
+            }
+        }
+
+        protected static void RandomArray<T>(T[][] array, int start, int end)
+        {
+            for (int i = start; 1 + i < end; ++i)
+            {
+                System.Random rand = new System.Random();
+                int randPos = rand.Next(1 + i, end);
+                Swap<T>(ref array[i], ref array[randPos]);
+            }
+        }
+
+ 
+        // Two dimension
+
+        void SortValuesBenefit<T>(string mutatorName, T[][] values, T[][] values_benefit, uint top)
+        {
+            allPosTimes = new uint[values.Length][];
+            // Init allPosTimes with times = 0
+            InitAllPosTimes();
+
+            // Get postions times 
+            List<Tuple<uint, uint>> posTimes = new List<Tuple<uint, uint>>();
+            MySQLHelper.MySQLHelper.GetMutationTimes(mutatorName, ref posTimes);
+
+            // Update allPosTimes's times
+            foreach (Tuple<uint, uint> it in posTimes)
+            {
+                allPosTimes[it.Item1][1] = it.Item2;
+            }
+
+            // Sort allPosTimes
+            SortAllPosTimes();
+        }
+
+
+        protected void InitValuesBenefit<T>(string mutatorName, T[][] values, ref T[][] values_benefit)
+        {
+            if (Sample.IsUseSample)
+            {
+                // Change values_benefit
+                uint size = Convert.ToUInt32(values.Length * Sample.VRC);
+                values_benefit = new T[size][];
+
+                // Sort values_benefit
+                SortValuesBenefit(mutatorName, values, values_benefit, size);
+
+                // Random the order of array from 1 + top to end
+                uint top = Convert.ToUInt32(size * Sample.VTOP);
+                RandomArray<uint>(allPosTimes, (int)top, (int)size);
+
+                // Set the values_benefit
+                for (uint i = 0; i < size; ++i)
+                    values_benefit[i] = values[allPosTimes[i][0]];
+            }
+            else
+            {
+                values_benefit = new T[values.Length][];
+
+                // Copy each values to values_benefit
+                for (int i = 0; i < values.Length; ++i)
+                    values_benefit[i] = values[i];
+            }
+        }
 	}
 }

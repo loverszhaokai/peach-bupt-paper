@@ -263,6 +263,8 @@ namespace Peach.Core
 		{
 			try
 			{
+                CurrentMutators.Connect();
+
 				context.test = test;
 				context.test.strategy.Context = context;
 				context.test.strategy.Engine = this;
@@ -332,6 +334,7 @@ namespace Peach.Core
 
 				while ((firstRun || iterationCount <= iterationStop) && context.continueFuzzing)
 				{
+                    CurrentMutators.Clear();
 					firstRun = false;
 
 					// Clear out or iteration based state store
@@ -511,10 +514,16 @@ to execute same as initial control.  State " + state.name + "was not performed."
 								fault.controlRecordingIteration = context.controlRecordingIteration;
 							}
 
-							if (context.reproducingFault || !test.replayEnabled)
-								OnFault(context, iterationCount, test.stateModel, context.faults.ToArray());
-							else
-								OnReproFault(context, iterationCount, test.stateModel, context.faults.ToArray());
+                            if (context.reproducingFault || !test.replayEnabled)
+                            {
+                                OnFault(context, iterationCount, test.stateModel, context.faults.ToArray());
+
+                                // Add current Mutators and Mutations into db
+
+                                CurrentMutators.AddToDB();
+                            }
+                            else
+                                OnReproFault(context, iterationCount, test.stateModel, context.faults.ToArray());
 
 							if (context.controlIteration && (!test.replayEnabled || context.reproducingFault))
 							{
@@ -687,6 +696,8 @@ to execute same as initial control.  State " + state.name + "was not performed."
 				context.test = null;
 
 				test.strategy.Finalize(context, this);
+
+                CurrentMutators.DisConnect();
 			}
 		}
 

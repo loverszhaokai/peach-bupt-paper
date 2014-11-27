@@ -44,7 +44,7 @@
 		<Mutators mode="include">
 			<Mutator class="DataElementRemoveMutator"/>
 			<Mutator class="StringCaseMutator"/>
-			<Mutator class="VulnMutator"/>
+			<Mutator class="StringMutator"/>
 		</Mutators>
 	
 		<Publisher class="Tcp">
