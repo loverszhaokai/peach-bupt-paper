@@ -324,5 +324,65 @@ namespace Peach.Core
                     values_benefit[i] = values[i];
             }
         }
+
+
+        // SimpleRandomSample and SystemRandomSample
+
+
+        private void SimpleRandom(uint _size, ref uint[] _sample_pos)
+        {
+            int [] pos = new int[_size];
+            for (int i = 0; i < _size; ++i)
+            {
+                pos[i] = i;
+            }
+
+            // pos = { 0, 1, 2, 3, 4, 5 ...}
+
+            for (int i = 0; i < _sample_pos.Length; ++i)
+            {
+                System.Random rand = new System.Random();
+                int p = rand.Next(i, (int)_size);
+                _sample_pos[i] = (uint)pos[p];
+                pos[p] = i;
+            }
+        }
+
+        private void SystemRandom(uint _size, ref uint[] _sample_pos)
+        {
+            int step = (int)_size / _sample_pos.Length;
+
+            System.Random rand = new System.Random();
+            int first_pos = rand.Next(0, step);
+
+            _sample_pos[0] = (uint)first_pos;
+
+            for (int i = 1; i < _sample_pos.Length; ++i)
+            {
+                _sample_pos[i] = _sample_pos[i - 1] + (uint)step;
+            }
+        }
+
+        protected void RandomSample(uint _size, ref uint[] _sample_pos)
+        {
+            Console.WriteLine("RandomSample(" + _size + ")");
+            Console.WriteLine("vrc=" + Sample.VRC);
+
+            uint sample_pos_size = (uint)(_size * Sample.VRC);
+            _sample_pos = new uint[sample_pos_size];
+
+            if ("SimpleRandomSample" == Sample.Name)
+            {
+                SimpleRandom(_size, ref _sample_pos);
+            }
+            else if ("SystemRandomSample" == Sample.Name)
+            {
+                SystemRandom(_size, ref _sample_pos);
+            }
+            else
+            {
+                Console.WriteLine("Wrong sample class:" + Sample.Name);
+            }
+        }
 	}
 }

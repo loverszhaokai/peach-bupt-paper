@@ -46,6 +46,8 @@ namespace Peach.Core
         // Is use Sample
         static bool isUseSample;
 
+        static string name;
+
         static double erc;
         static double mrc;
         static double vrc;
@@ -58,6 +60,12 @@ namespace Peach.Core
         {
             get { return isUseSample; }
             set { isUseSample = value; }
+        }
+
+        public static string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
 
         public static double ERC

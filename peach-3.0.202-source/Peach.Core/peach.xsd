@@ -1728,8 +1728,9 @@
             <xs:attribute name="class" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:string">
-                  <xs:enumeration value="BenefitSample">
-                  </xs:enumeration>
+                  <xs:enumeration value="BenefitSample"/>
+                  <xs:enumeration value="SimpleRandomSample"/>
+                  <xs:enumeration value="SystemRandomSample"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>

@@ -19,7 +19,7 @@ namespace MySQLHelper
 
             try
             {
-                Console.WriteLine("try to connect");
+                Console.WriteLine("try to connect to mysql");
 
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();

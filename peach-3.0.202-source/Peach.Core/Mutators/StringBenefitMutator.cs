@@ -77,7 +77,10 @@ namespace Peach.Core.Mutators
             uint values_pos = pos;
 
             if (Sample.IsUseSample)
+            {
                 values_pos = allPosTimes[pos][0];
+            }
+
             CurrentMutators.Add("StringBenefitMutator", values_pos);
 		}
 
@@ -92,7 +95,9 @@ namespace Peach.Core.Mutators
             uint values_pos = randPos;
 
             if (Sample.IsUseSample)
+            {
                 values_pos = allPosTimes[randPos][0];
+            }
 
             CurrentMutators.Add("StringBenefitMutator", values_pos);
 		}

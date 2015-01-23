@@ -1781,6 +1781,13 @@ namespace Peach.Core.Analyzers
                     Sample.VTOP = 1.0;
 
                     {
+                        var attr = child.getAttr("class", null);
+                        if (null != attr)
+                        {
+                            Sample.Name = attr.ToString();
+                        }
+                    }
+                    {
                         var attr = child.getAttr("erc", null);
                         if (null != attr)
                         {
@@ -1869,7 +1876,7 @@ namespace Peach.Core.Analyzers
                     Console.WriteLine("ETOP=" + Sample.ETOP.ToString());
                     Console.WriteLine("MTOP=" + Sample.MTOP.ToString());
                     Console.WriteLine("VTOP=" + Sample.VTOP.ToString());
-                    
+
                     Console.WriteLine("-----------Sample----------");
                 }
 

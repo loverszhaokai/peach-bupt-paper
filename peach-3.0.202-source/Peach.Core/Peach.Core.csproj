@@ -508,6 +508,12 @@
     <Compile Include="MutationStrategies\RandomStrategy.cs" />
     <Compile Include="MutationStrategies\Sequential.cs" />
     <Compile Include="MutationStrategies\SequentialCombination.cs" />
+    <Compile Include="Mutators\UnicodeBadUtf8RandomSampleMutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeBadUtf8RandomSampleMutator.cs" />
+    <Compile Include="Mutators\StringRandomSampleMutator.cs" />
+    <Compile Include="Mutators\StringRandomSampleMutator.Data.cs" />
+    <Compile Include="Mutators\UnicodeBomRandomSampleMutator.cs" />
+    <Compile Include="Mutators\UnicodeBomRandomSampleMutator.Data.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="MutationStrategy.cs" />
     <Compile Include="Mutator.cs" />
